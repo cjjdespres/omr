@@ -23,6 +23,9 @@
 #if defined(OMR_OS_WINDOWS)
 #include <windows.h>
 #endif /* defined(OMR_OS_WINDOWS) */
+#if defined(J9ZOS390)
+#define _LARGE_TIME_API
+#endif /* defined(J9ZOS390) */
 #include <time.h>
 
 #include "omrportasserts.h"
@@ -2146,7 +2149,7 @@ omrstr_subst_time(struct OMRPortLibrary *portLibrary, char *buf, uint32_t bufLen
  * @return If the time zone could be determined, returns 0. Otherwise returns -1.
  */
 int32_t
-omrstr_current_time_zone(struct OMRPortLibrary *portLibrary, int32_t *secondsEast, char *zoneNameBuffer, uint32_t zoneNameBufferLen)
+omrstr_current_time_zone(struct OMRPortLibrary *portLibrary, int32_t *secondsEast, char *zoneNameBuffer, size_t zoneNameBufferLen)
 {
 	BOOLEAN zoneAvailable = FALSE;
 	int32_t zoneSecondsEast = 0;
