@@ -802,13 +802,16 @@ TR_HeapMemory::allocate(size_t size, TR_MemoryBase::ObjectType ot)
    void operator delete[](void * p, TR::Region &region) { region.deallocate(p); } \
    static TrackedPersistentAllocator getPersistentAllocator() { return TrackedPersistentAllocator(); }
 
-#define TR_ALLOC(a) \
-   typedef TR_TypedPersistentAllocatorBase TrackedPersistentAllocator; \
-   TR_ALLOC_IMPL(a) \
+// #define TR_ALLOC(a) \
+//    typedef TR_TypedPersistentAllocatorBase TrackedPersistentAllocator; \
+//    TR_ALLOC_IMPL(a) \
 
 #define TR_ALLOC_SPECIALIZED(a) \
    typedef TR_TypedPersistentAllocator<a> TrackedPersistentAllocator; \
    TR_ALLOC_IMPL(a) \
+
+#define TR_ALLOC(a) \
+   TR_ALLOC_SPECIALIZED(a)
 
 class TRPersistentMemoryAllocator
    {
