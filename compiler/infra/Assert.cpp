@@ -139,14 +139,14 @@ namespace TR
       TR::trap();
       }
 
-   void assertion(const char *file, int line, const char *condition, const char *format, ...)
+   void OMR_NORETURN assertion(const char *file, int line, const char *condition, const char *format, ...)
       {
       TR::Compilation *comp = TR::comp();
       if (comp)
          {
          // TR_IgnoreAssert: ignore nonfatal assertion failures.
-         if (comp->getOption(TR_IgnoreAssert))
-            return;
+         // if (comp->getOption(TR_IgnoreAssert))
+            // return;
          // TR_SoftFailOnAssume: on nonfatal assertion failure, cancel the compilation without crashing the process.
          if (comp->getOption(TR_SoftFailOnAssume))
             comp->failCompilation<TR::AssertionFailure>("Assertion Failure");
