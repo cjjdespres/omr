@@ -161,7 +161,7 @@ namespace TR
 
    // Non fatal assertions may in some circumstances return, so do not mark them as
    // no-return.
-   void              assertion(const char *file, int line, const char *condition, const char *format, ...);
+   void OMR_NORETURN assertion(const char *file, int line, const char *condition, const char *format, ...);
 
    /**
     * Assertion failure exception type.
