@@ -257,6 +257,7 @@ OMR::DataType::initVectorNames()
    char *names = (char*)TR_Memory::jitPersistentAlloc(MAX_TYPE_NAME_LENGTH * TR::NumVectorTypes*sizeof(char));
    char *name = names;
 
+   fprintf(stderr, "Allocating names at: %p\n", names);
    for (int32_t i = TR::FirstVectorType; i <= TR::LastVectorType; i++)
       {
       TR::DataType dt((TR::DataTypes)i);
@@ -264,6 +265,7 @@ OMR::DataType::initVectorNames()
       TR::snprintfNoTrunc(name, MAX_TYPE_NAME_LENGTH, "Vector%s%s", getVectorLengthName(dt.getVectorLength()),
                                                                     getName(dt.getVectorElementType()));
       OMRDataTypeNames[dt] = name;
+      fprintf(stderr, "Printed name: %d %s\n", i, name);
       name += MAX_TYPE_NAME_LENGTH;
       }
    return true;
