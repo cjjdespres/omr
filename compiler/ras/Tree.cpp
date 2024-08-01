@@ -1461,7 +1461,9 @@ TR_Debug::printBasicPostNodeInfo(TR::FILE *pOutFile, TR::Node * node, uint32_t i
    if ((_comp->getNodeOpCodeLength() + indentation) < DEFAULT_NODE_LENGTH + DEFAULT_INDENT_INCREMENT)
       output.appendf( "%*s", DEFAULT_NODE_LENGTH + DEFAULT_INDENT_INCREMENT - ( _comp->getNodeOpCodeLength() + indentation ), "");
 
-   int32_t lineNumber = _comp->getLineNumber(node);
+   int32_t lineNumber = -1;
+   if (!_comp->getOption(TR_TraceDisableTreeLineNumbers))
+      lineNumber = _comp->getLineNumber(node);
 
    output.appendf("[%s] ", getName(node));
 

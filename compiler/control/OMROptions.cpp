@@ -1172,6 +1172,7 @@ TR::OptionTable OMR::Options::_jitOptions[] = {
    {"traceCompactLocals",               "L\ttrace compact locals",                         TR::Options::traceOptimization, compactLocals, 0, "P"},
    {"traceCompactNullChecks",           "L\ttrace compact null checks",                    TR::Options::traceOptimization, compactNullChecks, 0, "P"},
    {"traceDeadTreeElimination",         "L\ttrace dead tree elimination",                  TR::Options::traceOptimization, deadTreesElimination, 0, "P"},
+   {"traceDisableTreeLineNumbers",      "L\tdisable printing of line numbers in trees",    SET_OPTION_BIT(TR_TraceDisableTreeLineNumbers), "P"},
    {"traceDominators",                  "L\ttrace dominators and post-dominators",         SET_OPTION_BIT(TR_TraceDominators), "P" },
    {"traceEscapeAnalysis",              "L\ttrace escape analysis",                        TR::Options::traceOptimization, escapeAnalysis, 0, "P"},
    {"traceExitExtraction",              "L\ttrace extraction of structure nodes that unconditionally exit to outer regions", SET_OPTION_BIT(TR_TraceExitExtraction), "F"},
