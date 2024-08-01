@@ -296,14 +296,18 @@ OMR::DataType::getName(TR::DataType dt)
       {
       // to avoid any race conditions, initialize all vector names once,
       // as soon as first one is requested
-      static bool staticallyInitialized = initVectorNames();
+      static bool staticallyInitialized = false;
+      if (!staticallyInitialized)
+         staticallyInitialized = initVectorNames();
       TR_ASSERT_FATAL(staticallyInitialized && (OMRDataTypeNames[dt] != NULL), "Vector names should've been initialized");
       }
    else if (dt.isMask())
       {
       // to avoid any race conditions, initialize all mask names once,
       // as soon as first one is requested
-      static bool staticallyInitialized = initMaskNames();
+      static bool staticallyInitialized = false;
+      if (!staticallyInitialized)
+         staticallyInitialized = initMaskNames();
       TR_ASSERT_FATAL(staticallyInitialized && (OMRDataTypeNames[dt] != NULL), "Mask names should've been initialized");
       }
 
