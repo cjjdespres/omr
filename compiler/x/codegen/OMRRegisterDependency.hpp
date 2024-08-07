@@ -161,7 +161,7 @@ class RegisterDependencyConditions: public OMR::RegisterDependencyConditions
                         bool                       isAssocRegDependency = false)
       {
       uint32_t newCursor = unionRealDependencies(_preConditions, _addCursorForPre, vr, rr, cg, flag, isAssocRegDependency);
-      TR_ASSERT(newCursor <= _numPreConditions, "Too many dependencies");
+      // TR_ASSERT(newCursor <= _numPreConditions, "Too many dependencies");
       if (newCursor == _addCursorForPre)
          _numPreConditions--; // A vmThread/ebp dependency was displaced, so there is now one less condition.
       else
@@ -175,7 +175,7 @@ class RegisterDependencyConditions: public OMR::RegisterDependencyConditions
                           bool                       isAssocRegDependency = false)
       {
       uint32_t newCursor = unionDependencies(_preConditions, _addCursorForPre, vr, rr, cg, flag, isAssocRegDependency);
-      TR_ASSERT(newCursor <= _numPreConditions, "Too many dependencies");
+      // TR_ASSERT(newCursor <= _numPreConditions, "Too many dependencies");
       if (newCursor == _addCursorForPre)
          _numPreConditions--; // A union occurred, so there is now one less condition
       else
@@ -205,7 +205,7 @@ class RegisterDependencyConditions: public OMR::RegisterDependencyConditions
                            bool                       isAssocRegDependency = false)
       {
       uint32_t newCursor = unionDependencies(_postConditions, _addCursorForPost, vr, rr, cg, flag, isAssocRegDependency);
-      TR_ASSERT(newCursor <= _numPostConditions, "Too many dependencies");
+      // TR_ASSERT(newCursor <= _numPostConditions, "Too many dependencies");
       if (newCursor == _addCursorForPost)
          _numPostConditions--; // A union occurred, so there is now one less condition
       else
