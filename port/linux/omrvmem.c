@@ -45,6 +45,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -1169,6 +1170,21 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 					close(fd);
 					fd = OMRPORT_INVALID_FD;
 				}
+				/* Check the file is the right size, because ftruncate can
+				 * succeed and yet still not have given us a large enough file
+				 * if the file system is full. */
+				if (OMRPORT_INVALID_FD != fd) {
+					struct stat fdStat;
+					if ((-1 == fstat(fd, &fdStat)) || (fdStat.st_size < byteAmount)) {
+						close(fd);
+						fd = OMRPORT_INVALID_FD;
+						if (fdStat.st_size < byteAmount) {
+						   fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
+						   exit(1);
+						}
+					}
+				}
+
 			}
 			if (OMRPORT_INVALID_FD == fd) {
 				Trc_PRT_vmem_reserve_tempfile_not_created(filename, byteAmount);
