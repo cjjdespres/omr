@@ -1175,13 +1175,16 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 				 * if the file system is full. */
 				if (OMRPORT_INVALID_FD != fd) {
 					struct stat fdStat;
-					if ((-1 == fstat(fd, &fdStat)) || (fdStat.st_size < byteAmount)) {
+					if (-1 == fstat(fd, &fdStat)) {
 						close(fd);
 						fd = OMRPORT_INVALID_FD;
-						if (fdStat.st_size < byteAmount) {
-						   fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
-						   exit(1);
-						}
+						fprintf(stderr, "Couldn't even fstat!\n");
+					} else if (fdStat.st_size < byteAmount) {
+						close(fd);
+						fd = OMRPORT_INVALID_FD;
+						fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
+					} else {
+						fprintf(stderr, "Sadly we got enough!\n");
 					}
 				}
 
