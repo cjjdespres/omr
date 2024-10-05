@@ -1166,6 +1166,13 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 			fd = mkostemp(filename, 0);
 			if (OMRPORT_INVALID_FD != fd) {
 				unlink(filename);
+				struct statfs fdStatfs;
+				if (-1 == fstatfs(fd, &fdStatfs)) {
+				fprintf(stderr, "Couldn't even fstatfs!\n");
+				} else {
+				fprintf(stderr, "We have f_bsize %lu f_bfree %lu\n", fdStatfs.f_bsize, fdStatfs.f_bfree);
+				}
+
 				/* Set the file size with ftruncate. */
 				if (OMRPORT_INVALID_FD == ftruncate(fd, byteAmount)) {
 					close(fd);
@@ -1186,12 +1193,6 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 						fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
 					} else {
 						fprintf(stderr, "Sadly we got enough! %lu\n", byteAmount);
-					}
-					struct statfs fdStatfs;
-					if (-1 == fstatfs(fd, &fdStatfs)) {
-						fprintf(stderr, "Couldn't even fstatfs!\n");
-					} else {
-						fprintf(stderr, "We have f_bsize %lu f_bfree %lu\n", fdStatfs.f_bsize, fdStatfs.f_bfree);
 					}
 				}
 
