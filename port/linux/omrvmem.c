@@ -1185,7 +1185,7 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 						fd = OMRPORT_INVALID_FD;
 						fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
 					} else {
-						fprintf(stderr, "Sadly we got enough!\n");
+						fprintf(stderr, "Sadly we got enough! %lu\n", byteAmount);
 					}
 					struct statfs fdStatfs;
 					if (-1 == fstatfs(fd, &fdStatfs)) {
