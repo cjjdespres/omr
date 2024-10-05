@@ -46,6 +46,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/statfs.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -1185,6 +1186,12 @@ reserve_memory_with_mmap(struct OMRPortLibrary *portLibrary, void *address, uint
 						fprintf(stderr, "We did actually not get enough! %lu < %lu\n", byteAmount, fdStat.st_size);
 					} else {
 						fprintf(stderr, "Sadly we got enough!\n");
+					}
+					struct statfs fdStatfs;
+					if (-1 == fstatfs(fd, &fdStatfs)) {
+						fprintf(stderr, "Couldn't even fstatfs!\n");
+					} else {
+						fprintf(stderr, "We have f_bsize %lu f_bfree %lu\n", fdStatfs.f_bsize, fdStatfs.f_bfree);
 					}
 				}
 
