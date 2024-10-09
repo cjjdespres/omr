@@ -151,6 +151,11 @@ namespace TR
          if (comp->getOption(TR_SoftFailOnAssume))
             comp->failCompilation<TR::AssertionFailure>("Assertion Failure");
          }
+      if (TR::Options::getJITCmdLineOptions() && TR::Options::getJITCmdLineOptions()->getOption(TR_IgnoreAssert))
+         {
+         // Honour TR_IgnoreAssert if it was specified at the top level
+         return;
+         }
       va_list ap;
       va_start(ap, format);
       va_fatal_assertion(file, line, condition, format, ap);
