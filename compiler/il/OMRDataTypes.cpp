@@ -254,6 +254,9 @@ OMR::DataType::getVectorLengthName(TR::VectorLength length)
 bool
 OMR::DataType::initVectorNames()
    {
+   if (OMRDataTypeNames[TR::DataType((TR::DataTypes)TR::FirstVectorType)])
+      return true;
+
    char *names = (char*)TR_Memory::jitPersistentAlloc(MAX_TYPE_NAME_LENGTH * TR::NumVectorTypes*sizeof(char));
    char *name = names;
 
@@ -273,6 +276,9 @@ OMR::DataType::initVectorNames()
 bool
 OMR::DataType::initMaskNames()
    {
+   if (OMRDataTypeNames[TR::DataType((TR::DataTypes)TR::FirstMaskType)])
+      return true;
+
    char *names = (char*)TR_Memory::jitPersistentAlloc(MAX_TYPE_NAME_LENGTH * TR::NumMaskTypes*sizeof(char));
    char *name = names;
 
